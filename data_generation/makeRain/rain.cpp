@@ -29,17 +29,23 @@ Mat<double> Rain::get_intrinsic(const string &image_path) {
 
     ifstream stream(json_path, ifstream::binary);
     Json::Value root;
-    stream >> root;
-    root = root.get("intrinsic", 0);
+    
+    //stream >> root;
+    //root = root.get("intrinsic", 0);
+
+    
+    
 
     intrinsic = zeros<mat>(3, 3);
-    intrinsic(0, 0) = root.get("fx", 0).asDouble();
-    intrinsic(1, 1) = root.get("fy", 0).asDouble();
+    intrinsic(0, 0) = image.cols;
+    intrinsic(1, 1) = image.rows;
     intrinsic(2, 2) = 1.0;
-    intrinsic(0, 2) = root.get("u0", 0).asDouble();
-    intrinsic(1, 2) = root.get("v0", 0).asDouble();
+    intrinsic(0, 2) = image.cols;
+    intrinsic(1, 2) = image.rows;
 
     return intrinsic;
+    
+    
 }
 
 Row<double> Rain::to_glass(const double &x, const double &y) {
